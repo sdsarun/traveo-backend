@@ -4,10 +4,15 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
-import { VersioningType } from '@nestjs/common';
+import { Logger, VersioningType } from '@nestjs/common';
+import { ConfigurationsService } from './configurations/configurations.service';
 
 async function bootstrap() {
+  const logger = new Logger(bootstrap.name);
+
   const app = await NestFactory.create(AppModule);
+
+  const configurationsService = app.get(ConfigurationsService);
 
   app.use(helmet());
   app.use(cookieParser());
@@ -26,7 +31,7 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, swaggerDocumentBuild);
   SwaggerModule.setup('docs', app, documentFactory);
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3456, () => logger.log(`Application running ${process.env.PORT}`));
 }
 
 bootstrap();
