@@ -22,14 +22,16 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: "1" });
 
   // swagger
-  const swaggerDocumentBuilder = new DocumentBuilder();
-  swaggerDocumentBuilder.setTitle('Traveo')
-  swaggerDocumentBuilder.setDescription("Trip planner API")
-  swaggerDocumentBuilder.setVersion('1.0')
+  if (configurationsService.isDevelopment) {
+    const swaggerDocumentBuilder = new DocumentBuilder();
+    swaggerDocumentBuilder.setTitle('Traveo')
+    swaggerDocumentBuilder.setDescription("Trip planner API")
+    swaggerDocumentBuilder.setVersion('1.0')
 
-  const swaggerDocumentBuild = swaggerDocumentBuilder.build();
-  const documentFactory = () => SwaggerModule.createDocument(app, swaggerDocumentBuild);
-  SwaggerModule.setup('docs', app, documentFactory);
+    const swaggerDocumentBuild = swaggerDocumentBuilder.build();
+    const documentFactory = () => SwaggerModule.createDocument(app, swaggerDocumentBuild);
+    SwaggerModule.setup('docs', app, documentFactory);
+  }
 
   await app.listen(process.env.PORT ?? 3456, () => logger.log(`Application running on ${process.env.PORT}`));
 }
