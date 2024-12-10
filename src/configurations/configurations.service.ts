@@ -39,7 +39,7 @@ export class ConfigurationsService {
       autoLoadModels: true,
       synchronize: this.isDevelopment,
       dialectOptions: {
-        ssl: true
+        ssl: this.config.get("DB_MAIN_SSL") === "true"
       },
       define: {
         freezeTableName: true,

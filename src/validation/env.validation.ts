@@ -1,6 +1,7 @@
 
 import { plainToInstance } from 'class-transformer';
 import { IsEnum, IsNumber, IsString, Max, Min, validateSync } from 'class-validator';
+import { IsTrueOrFalseString } from 'src/common/validators/is-true-or-false-string.validator';
 import { Environment } from 'src/constants/env.constant';
 
 export function validateEnviroment(config: Record<string, unknown>) {
@@ -43,6 +44,6 @@ export class EnvironmentVariables {
   @IsString()
   DB_MAIN_PASSWORD: string;
   
-  @IsString()
+  @IsTrueOrFalseString()
   DB_MAIN_SSL: string;
 }
