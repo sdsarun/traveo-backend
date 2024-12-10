@@ -14,10 +14,10 @@ async function bootstrap() {
 
   const configurationsService = app.get(ConfigurationsService);
 
-  app.use(helmet());
+  app.use(helmet(configurationsService.helmetConfig));
   app.use(cookieParser());
 
-  app.enableCors();
+  app.enableCors(configurationsService.corsConfig);
 
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: "1" });
 
@@ -31,7 +31,7 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, swaggerDocumentBuild);
   SwaggerModule.setup('docs', app, documentFactory);
 
-  await app.listen(process.env.PORT ?? 3456, () => logger.log(`Application running ${process.env.PORT}`));
+  await app.listen(process.env.PORT ?? 3456, () => logger.log(`Application running on ${process.env.PORT}`));
 }
 
 bootstrap();

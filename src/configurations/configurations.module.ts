@@ -1,6 +1,7 @@
 import { Global, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { ConfigurationsService } from "./configurations.service";
+import { validateEnviroment } from "src/validation/env.validation";
 
 @Global()
 @Module({
@@ -9,6 +10,7 @@ import { ConfigurationsService } from "./configurations.service";
       cache: true,
       isGlobal: true,
       envFilePath: [".env", ".env.prod", ".env.dev", ".env.test"],
+      validate: validateEnviroment,
     }),
   ],
   providers: [ConfigurationsService],
