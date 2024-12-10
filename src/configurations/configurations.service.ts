@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, ValidationPipeOptions } from "@nestjs/common";
 import { CorsOptions } from "@nestjs/common/interfaces/external/cors-options.interface";
 import { ConfigService } from "@nestjs/config";
 import { SequelizeModuleOptions } from "@nestjs/sequelize";
@@ -48,6 +48,13 @@ export class ConfigurationsService {
         deletedAt: "deleted_at",
         paranoid: true,
       },
+    }
+  }
+
+  get validationPipeConfig(): Readonly<ValidationPipeOptions> {
+    return {
+      transform: true,
+      whitelist: true,
     }
   }
 
