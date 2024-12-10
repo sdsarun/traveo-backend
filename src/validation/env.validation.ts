@@ -3,7 +3,7 @@ import { plainToInstance } from 'class-transformer';
 import { IsEnum, IsNumber, Max, Min, validateSync } from 'class-validator';
 import { Environment } from 'src/constants/env.constant';
 
-class EnvironmentVariables {
+export class EnvironmentVariables {
   @IsEnum(Environment)
   NODE_ENV: Environment;
 
