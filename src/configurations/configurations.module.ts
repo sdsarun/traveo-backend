@@ -9,7 +9,7 @@ import { validateEnviroment } from "src/validation/env.validation";
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
-      envFilePath: [".env", ".env.prod", ".env.dev", ".env.test"],
+      envFilePath: [".env.local", ".env.dev", ".env.prod", ".env.test"],
       validate: validateEnviroment,
     }),
   ],
