@@ -37,16 +37,13 @@ export class ConfigurationsService {
       schema: this.config.get("DB_MAIN_SCHEMA"),
       models: MODELS,
       autoLoadModels: true,
-      synchronize: this.isDevelopment,
+      synchronize: false,
       dialectOptions: {
         ssl: this.config.get("DB_MAIN_SSL") === "true"
       },
       define: {
         freezeTableName: true,
-        createdAt: "created_at",
-        updatedAt: "updated_at",
-        deletedAt: "deleted_at",
-        paranoid: true,
+        timestamps: false,
       },
     }
   }
