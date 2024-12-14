@@ -29,6 +29,7 @@ async function bootstrap() {
     swaggerDocumentBuilder.setTitle('Traveo')
     swaggerDocumentBuilder.setDescription("Trip planner API")
     swaggerDocumentBuilder.setVersion('1.0')
+    swaggerDocumentBuilder.addBearerAuth();
 
     const swaggerDocumentBuild = swaggerDocumentBuilder.build();
     const documentFactory = () => SwaggerModule.createDocument(app, swaggerDocumentBuild);
