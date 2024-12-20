@@ -26,6 +26,8 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ClerkRequiredAuthMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
+      .exclude({ path: '/health', method: RequestMethod.ALL, version: '1' })
+      .forRoutes({ path: '*', method: RequestMethod.ALL, version: '1' });
+      
   }
 }
