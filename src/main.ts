@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigurationsService } from './configurations/configurations.service';
-import { clerkMiddleware, verifyToken } from '@clerk/express';
+import { clerkMiddleware } from '@clerk/express';
 
 async function bootstrap() {
   const logger = new Logger(bootstrap.name);
