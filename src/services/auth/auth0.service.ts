@@ -4,8 +4,8 @@ import * as jwksClient from 'jwks-rsa';
 import { ConfigurationsService } from 'src/configurations/configurations.service';
 
 @Injectable()
-export class JwtService {
-  private readonly logger = new Logger(JwtService.name);
+export class Auth0Service {
+  private readonly logger = new Logger(Auth0Service.name);
   private client: jwksClient.JwksClient;
 
   constructor(private readonly configurationService: ConfigurationsService) {

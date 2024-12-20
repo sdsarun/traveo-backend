@@ -5,13 +5,13 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { JwtService } from 'src/services/auth/jwt.service';
+import { Auth0Service } from 'src/services/auth/auth0.service';
 
 @Injectable()
 export class VerifyAccessTokenMiddleware implements NestMiddleware {
   private readonly logger = new Logger(VerifyAccessTokenMiddleware.name);
 
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(private readonly auth0Service: Auth0Service) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
     const accessToken = this.extractTokenFromRequest(req);
@@ -23,7 +23,7 @@ export class VerifyAccessTokenMiddleware implements NestMiddleware {
     }
 
     try {
-      await this.jwtService.verifyToken(accessToken);
+      await this.auth0Service.verifyToken(accessToken);
       next();
     } catch (error) {
       this.logger.error('Token verification failed', error.stack);
