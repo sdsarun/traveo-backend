@@ -19,6 +19,8 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(clerkMiddleware(configurationsService.clerkConfig));
 
+  app.setGlobalPrefix("api");
+
   app.useGlobalPipes(
     new ValidationPipe(configurationsService.validationPipeConfig),
   );
