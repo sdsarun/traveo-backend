@@ -6,6 +6,7 @@ import { HelmetOptions } from 'helmet';
 import { Environment } from 'src/shared/constants/env.constant';
 import { MODELS } from 'src/database/models';
 import { EnvironmentVariables } from 'src/validation/env.validation';
+import { ClerkOptions } from "@clerk/express"
 
 @Injectable()
 export class ConfigurationsService {
@@ -69,9 +70,11 @@ export class ConfigurationsService {
     return {};
   }
 
-  get auth0Config(): Readonly<{ issuerBaseUrl: string }> {
+  get clerkConfig(): Readonly<Pick<ClerkOptions, "jwtKey" | "secretKey" | "publishableKey">> {
     return {
-      issuerBaseUrl: this.config.get('AUTH0_ISSUER_BASE_URL'),
-    };
+      jwtKey: this.config.get("CLERK_JWT_KEY") ?? "",
+      publishableKey: this.config.get("CLERK_PUBLISHABLE_KEY") ?? "",
+      secretKey: this.config.get("CLERK_SECRET_KEY") ?? "",
+    }
   }
 }

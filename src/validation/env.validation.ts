@@ -58,8 +58,11 @@ export class EnvironmentVariables {
   DB_MAIN_SSL: string;
 
   @IsString()
-  AUTH0_ISSUER_BASE_URL: string;
+  CLERK_SECRET_KEY: string;
 
-  // @IsString()
-  // AUTH0_AUDIENCE: string;
+  @IsString()
+  CLERK_PUBLISHABLE_KEY: string;
+
+  @IsString()
+  CLERK_JWT_KEY: string;
 }

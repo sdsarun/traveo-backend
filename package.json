@@ -25,6 +25,7 @@
     "db:gmg": "ts-node -r tsconfig-paths/register ./node_modules/.bin/sequelize-cli migration:generate --name"
   },
   "dependencies": {
+    "@clerk/express": "^1.3.31",
     "@nestjs/axios": "^3.1.2",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.3.0",
@@ -41,7 +42,6 @@
     "cookie-parser": "^1.4.7",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "jwks-rsa": "^3.1.0",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.2.0",

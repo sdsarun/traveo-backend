@@ -8,17 +8,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigurationsModule } from './configurations/configurations.module';
 import { DatabaseModule } from './database/database.module';
-import { UsersModule } from './services/users/users.module';
 import { HealthModule } from './services/health/health.module';
-import { VerifyAccessTokenMiddleware } from './common/middlewares/verify-access-token.middleware';
-import { AuthModule } from './services/auth/auth.module';
+import { UsersModule } from './services/users/users.module';
+import { ClerkRequiredAuthMiddleware } from './common/middlewares/clerk-required-auth.middleware';
 
 @Module({
   imports: [
     ConfigurationsModule,
     DatabaseModule,
     HealthModule,
-    AuthModule,
     UsersModule,
   ],
   controllers: [AppController],
@@ -27,7 +25,7 @@ import { AuthModule } from './services/auth/auth.module';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(VerifyAccessTokenMiddleware)
+      .apply(ClerkRequiredAuthMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }

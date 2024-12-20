@@ -9,4 +9,13 @@ export class Users extends Model<Users> {
 
   @Column({ type: DataType.STRING(60), unique: true, allowNull: false })
   username: string;
+
+  @Column({ type: DataType.DATE() })
+  created_at: Date;
+
+  @Column({ type: DataType.DATE() })
+  updated_at: Date;
+
+  @Column({ type: DataType.DATE() })
+  deleted_at: Date;
 }
