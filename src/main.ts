@@ -4,29 +4,49 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
-import { VersioningType } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+import { ConfigurationsService } from './configurations/configurations.service';
+import { clerkMiddleware } from '@clerk/express';
 
 async function bootstrap() {
+  const logger = new Logger(bootstrap.name);
+
   const app = await NestFactory.create(AppModule);
 
-  app.use(helmet());
+  const configurationsService = app.get(ConfigurationsService);
+
+  app.use(helmet(configurationsService.helmetConfig));
   app.use(cookieParser());
+  app.use(clerkMiddleware(configurationsService.clerkConfig.core));
 
-  app.enableCors();
+  app.setGlobalPrefix("api");
 
-  app.enableVersioning({ type: VersioningType.URI, defaultVersion: "1" });
+  app.useGlobalPipes(
+    new ValidationPipe(configurationsService.validationPipeConfig),
+  );
+
+  app.enableCors(configurationsService.corsConfig);
+
+  app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
 
   // swagger
-  const swaggerDocumentBuilder = new DocumentBuilder();
-  swaggerDocumentBuilder.setTitle('Traveo')
-  swaggerDocumentBuilder.setDescription("Trip planner API")
-  swaggerDocumentBuilder.setVersion('1.0')
+  if (configurationsService.isDevelopment) {
+    const swaggerDocumentBuilder = new DocumentBuilder();
+    swaggerDocumentBuilder.setTitle('Traveo');
+    swaggerDocumentBuilder.setDescription('Trip planner API');
+    swaggerDocumentBuilder.setVersion('1.0');
+    swaggerDocumentBuilder.addBearerAuth();
 
-  const swaggerDocumentBuild = swaggerDocumentBuilder.build();
-  const documentFactory = () => SwaggerModule.createDocument(app, swaggerDocumentBuild);
-  SwaggerModule.setup('docs', app, documentFactory);
+    const swaggerDocumentBuild = swaggerDocumentBuilder.build();
+    const documentFactory = () =>
+      SwaggerModule.createDocument(app, swaggerDocumentBuild);
+    SwaggerModule.setup('docs', app, documentFactory);
+  }
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3456, async () => {
+    const url = await app.getUrl();
+    logger.log(`Application running on ${url}`);
+  });
 }
 
 bootstrap();
