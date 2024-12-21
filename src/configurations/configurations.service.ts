@@ -38,7 +38,7 @@ export class ConfigurationsService {
     };
   }
 
-  get databaseMainConfig(): SequelizeModuleOptions {
+  get databaseMainConfig(): Readonly<SequelizeModuleOptions> {
     return {
       dialect: 'postgres',
       host: this.config.get('DB_MAIN_HOST'),
