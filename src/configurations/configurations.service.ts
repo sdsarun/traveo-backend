@@ -76,13 +76,21 @@ export class ConfigurationsService {
     return {};
   }
 
-  get clerkConfig(): Readonly<
-    Pick<ClerkOptions, 'jwtKey' | 'secretKey' | 'publishableKey'>
-  > {
+  get clerkConfig(): Readonly<{
+    core: Pick<ClerkOptions, 'jwtKey' | 'secretKey' | 'publishableKey'>;
+    webhook: {
+      signingSecret: string;
+    };
+  }> {
     return {
-      jwtKey: this.config.get('CLERK_JWT_KEY') ?? '',
-      publishableKey: this.config.get('CLERK_PUBLISHABLE_KEY') ?? '',
-      secretKey: this.config.get('CLERK_SECRET_KEY') ?? '',
+      core: {
+        jwtKey: this.config.get('CLERK_JWT_KEY') ?? '',
+        publishableKey: this.config.get('CLERK_PUBLISHABLE_KEY') ?? '',
+        secretKey: this.config.get('CLERK_SECRET_KEY') ?? '',
+      },
+      webhook: {
+        signingSecret: this.config.get('CLERK_WEBHOOK_SIGNING_SECRET'),
+      },
     };
   }
 }

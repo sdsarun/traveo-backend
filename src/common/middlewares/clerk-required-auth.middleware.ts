@@ -16,7 +16,7 @@ export class ClerkRequiredAuthMiddleware implements NestMiddleware {
       const auth = await authenticateRequest({
         clerkClient,
         request: req,
-        options: this.configurationsService.clerkConfig,
+        options: this.configurationsService.clerkConfig.core,
       });
 
       if (!auth.isSignedIn) {

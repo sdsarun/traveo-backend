@@ -17,7 +17,7 @@ async function bootstrap() {
 
   app.use(helmet(configurationsService.helmetConfig));
   app.use(cookieParser());
-  app.use(clerkMiddleware(configurationsService.clerkConfig));
+  app.use(clerkMiddleware(configurationsService.clerkConfig.core));
 
   app.setGlobalPrefix("api");
 

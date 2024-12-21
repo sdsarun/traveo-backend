@@ -1,10 +1,10 @@
-import { IsEnum, IsNumber, IsString, Max, Min } from "class-validator";
-import { IsTrueOrFalseString } from "src/common/validators/is-true-or-false-string.validator";
+import { IsEnum, IsNumber, IsString, Max, Min } from 'class-validator';
+import { IsTrueOrFalseString } from 'src/common/validators/is-true-or-false-string.validator';
 
 export enum Environment {
-  Development = "development",
-  Production = "production",
-  Test = "test",
+  Development = 'development',
+  Production = 'production',
+  Test = 'test',
 }
 
 export class EnvironmentVariables {
@@ -47,4 +47,7 @@ export class EnvironmentVariables {
 
   @IsString()
   CLERK_JWT_KEY: string;
+
+  @IsString()
+  CLERK_WEBHOOK_SIGNING_SECRET: string;
 }
