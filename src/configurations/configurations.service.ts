@@ -1,11 +1,14 @@
+import { ClerkOptions } from '@clerk/express';
 import { Injectable, ValidationPipeOptions } from '@nestjs/common';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
 import { HelmetOptions } from 'helmet';
-import { Environment, EnvironmentVariables } from 'src/shared/constants/env.constant';
-import { MODELS } from 'src/database/models';
-import { ClerkOptions } from "@clerk/express"
+import { MAIN_MODELS } from 'src/database/models';
+import {
+  Environment,
+  EnvironmentVariables,
+} from 'src/shared/constants/env.constant';
 
 @Injectable()
 export class ConfigurationsService {
@@ -25,7 +28,17 @@ export class ConfigurationsService {
     return this.configService.get('NODE_ENV') === Environment.Production;
   }
 
-  get dbMainConfig(): Readonly<SequelizeModuleOptions> {
+  get validationPipeConfig(): Readonly<ValidationPipeOptions> {
+    return {
+      // transform: true,
+      // transformOptions: {
+      //   enableImplicitConversion: true,
+      // },
+      whitelist: true,
+    };
+  }
+
+  get databaseMainConfig(): SequelizeModuleOptions {
     return {
       dialect: 'postgres',
       host: this.config.get('DB_MAIN_HOST'),
@@ -34,30 +47,24 @@ export class ConfigurationsService {
       password: this.config.get('DB_MAIN_PASSWORD'),
       database: this.config.get('DB_MAIN_DATABASE'),
       schema: this.config.get('DB_MAIN_SCHEMA'),
-      models: MODELS,
+      models: MAIN_MODELS,
       autoLoadModels: true,
       synchronize: true,
+      define: {
+        freezeTableName: true,
+        timestamps: true,
+        paranoid: true,
+        updatedAt: 'updated_at',
+        createdAt: 'created_at',
+        deletedAt: 'deleted_at',
+      },
       dialectOptions: {
         ssl: this.config.get('DB_MAIN_SSL') === 'true',
       },
-      define: {
-        freezeTableName: true,
-        timestamps: false,
-      },
-      sync: {
-        // force: true,
-        alter: true,
-      },
-    };
-  }
-
-  get validationPipeConfig(): Readonly<ValidationPipeOptions> {
-    return {
-      // transform: true,
-      // transformOptions: {
-      //   enableImplicitConversion: true,
+      // sync: {
+      //   force: true,
+      //   alter: true,
       // },
-      whitelist: true,
     };
   }
 
@@ -69,11 +76,13 @@ export class ConfigurationsService {
     return {};
   }
 
-  get clerkConfig(): Readonly<Pick<ClerkOptions, "jwtKey" | "secretKey" | "publishableKey">> {
+  get clerkConfig(): Readonly<
+    Pick<ClerkOptions, 'jwtKey' | 'secretKey' | 'publishableKey'>
+  > {
     return {
-      jwtKey: this.config.get("CLERK_JWT_KEY") ?? "",
-      publishableKey: this.config.get("CLERK_PUBLISHABLE_KEY") ?? "",
-      secretKey: this.config.get("CLERK_SECRET_KEY") ?? "",
-    }
+      jwtKey: this.config.get('CLERK_JWT_KEY') ?? '',
+      publishableKey: this.config.get('CLERK_PUBLISHABLE_KEY') ?? '',
+      secretKey: this.config.get('CLERK_SECRET_KEY') ?? '',
+    };
   }
 }

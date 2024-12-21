@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-require('dotenv').config({ path: [".env.local", ".env.dev", ".env.prod", ".env.test"] });
+require('dotenv').config();
 
 const config = {
   production: {
-    dialect: "postgres",
+    dialect: 'postgres',
     host: process.env.DB_MAIN_HOST,
     port: +process.env.DB_MAIN_PORT,
     username: process.env.DB_MAIN_USERNAME,
@@ -11,20 +11,19 @@ const config = {
     database: process.env.DB_MAIN_DATABASE,
     schema: process.env.DB_MAIN_SCHEMA,
     dialectOptions: {
-      ssl: process.env.DB_MAIN_SSL === "true"
+      ssl: process.env.DB_MAIN_SSL === 'true',
     },
   },
   development: {
-    dialect: "postgres",
-    host: "localhost",
+    dialect: 'postgres',
+    host: '192.168.2.39',
     port: 5432,
-    username: "postgres",
-    password: "P@ssw0rd",
-    database: "traveo-dev",
-    schema: "traveo",
+    username: 'dev',
+    password: 'dev',
+    database: 'traveo-dev',
+    schema: 'traveo',
   },
-  test: {
-  }
-}
+  test: {},
+};
 
 module.exports = config;

@@ -1,6 +1,4 @@
-import { ModelCtor } from "sequelize-typescript";
-import { Users } from "./users.model";
+import { ModelCtor } from 'sequelize-typescript';
+import { Trips } from './trips.model';
 
-export const MODELS: ModelCtor[] = [
-  Users
-]
+export const MAIN_MODELS: ModelCtor[] = [Trips];

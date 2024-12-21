@@ -7,18 +7,12 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigurationsModule } from './configurations/configurations.module';
-import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './services/health/health.module';
-import { UsersModule } from './services/users/users.module';
 import { ClerkRequiredAuthMiddleware } from './common/middlewares/clerk-required-auth.middleware';
-
+import { LoggerModule } from './logger/logger.module';
+import { DatabaseModule } from './database/database.module';
 @Module({
-  imports: [
-    ConfigurationsModule,
-    DatabaseModule,
-    HealthModule,
-    UsersModule,
-  ],
+  imports: [ConfigurationsModule, LoggerModule, DatabaseModule, HealthModule],
   controllers: [AppController],
   providers: [AppService],
 })
@@ -28,6 +22,5 @@ export class AppModule implements NestModule {
       .apply(ClerkRequiredAuthMiddleware)
       .exclude({ path: '/health', method: RequestMethod.ALL, version: '1' })
       .forRoutes({ path: '*', method: RequestMethod.ALL, version: '1' });
-      
   }
 }
