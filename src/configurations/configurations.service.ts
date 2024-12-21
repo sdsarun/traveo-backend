@@ -49,7 +49,7 @@ export class ConfigurationsService {
       schema: this.config.get('DB_MAIN_SCHEMA'),
       models: MAIN_MODELS,
       autoLoadModels: true,
-      synchronize: true,
+      synchronize: false,
       define: {
         freezeTableName: true,
         timestamps: true,
