@@ -3,9 +3,8 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
 import { HelmetOptions } from 'helmet';
-import { Environment } from 'src/shared/constants/env.constant';
+import { Environment, EnvironmentVariables } from 'src/shared/constants/env.constant';
 import { MODELS } from 'src/database/models';
-import { EnvironmentVariables } from 'src/validation/env.validation';
 import { ClerkOptions } from "@clerk/express"
 
 @Injectable()
