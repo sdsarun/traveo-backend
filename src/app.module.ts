@@ -13,6 +13,8 @@ import { LoggerModule } from './logger/logger.module';
 import { DatabaseModule } from './database/database.module';
 import { ExternalModule } from './services/external/external.module';
 import { UsersModule } from './services/users/users.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggerInterceptor } from './common/interceptors/logger.interceptor';
 @Module({
   imports: [
     ConfigurationsModule,
@@ -23,7 +25,13 @@ import { UsersModule } from './services/users/users.module';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggerInterceptor,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -19,7 +19,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(clerkMiddleware(configurationsService.clerkConfig.core));
 
-  app.setGlobalPrefix("api");
+  app.setGlobalPrefix('api');
 
   app.useGlobalPipes(
     new ValidationPipe(configurationsService.validationPipeConfig),
@@ -37,9 +37,9 @@ async function bootstrap() {
     swaggerDocumentBuilder.setVersion('1.0');
     swaggerDocumentBuilder.addBearerAuth();
 
-    const swaggerDocumentBuild = swaggerDocumentBuilder.build();
+    const swaggerDocumentBuilded = swaggerDocumentBuilder.build();
     const documentFactory = () =>
-      SwaggerModule.createDocument(app, swaggerDocumentBuild);
+      SwaggerModule.createDocument(app, swaggerDocumentBuilded);
     SwaggerModule.setup('docs', app, documentFactory);
   }
 
