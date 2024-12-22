@@ -24,8 +24,11 @@ export class LoggerInterceptor implements NestInterceptor {
     const response = context.switchToHttp().getResponse<Response>();
     const startTime = Date.now();
 
+    const requestId = request?.requestId;
+
     this.logger.log({
       request: {
+        requestId,
         method: request.method,
         url: request.originalUrl,
         headers: this.sanitize(request.headers),
@@ -40,6 +43,7 @@ export class LoggerInterceptor implements NestInterceptor {
 
         this.logger.log({
           response: {
+            requestId,
             statusCode: response.statusCode,
             durationMs: duration,
           },
@@ -54,6 +58,7 @@ export class LoggerInterceptor implements NestInterceptor {
 
         this.logger.error({
           error: {
+            requestId,
             statusCode: errorStatusCode,
             durationMs: duration,
             errorMessage: error.message,
