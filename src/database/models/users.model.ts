@@ -5,6 +5,7 @@ export type UsersAttributes = {
   first_name: string | null;
   last_name: string | null;
   username: string | null;
+  user_credential_type_id: number | null;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date | null;
@@ -29,6 +30,9 @@ export class Users extends Model<UsersAttributes> {
 
   @Column({ type: DataType.STRING, allowNull: true })
   username: string;
+
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  user_credential_type_id: number;
 
   @Column({ type: DataType.DATE, allowNull: false, defaultValue: DataType.NOW })
   created_at: Date;
