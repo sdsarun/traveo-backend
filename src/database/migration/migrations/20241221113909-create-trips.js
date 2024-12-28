@@ -18,7 +18,7 @@ module.exports = {
           defaultValue: Sequelize.DataTypes.UUIDV4, // Corrected to use Sequelize
         },
         user_id: {
-          type: Sequelize.DataTypes.UUID,
+          type: Sequelize.DataTypes.STRING(255),
           allowNull: true, // Assuming user_id cannot be null
         },
         name: {
