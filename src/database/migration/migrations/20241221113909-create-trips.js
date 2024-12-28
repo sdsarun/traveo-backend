@@ -19,7 +19,7 @@ module.exports = {
         },
         user_id: {
           type: Sequelize.DataTypes.UUID,
-          allowNull: false, // Assuming user_id cannot be null
+          allowNull: true, // Assuming user_id cannot be null
         },
         name: {
           type: Sequelize.DataTypes.STRING,
