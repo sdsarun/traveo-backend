@@ -2,11 +2,11 @@ import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 export type TripsAttributes = {
   id: string;
-  user_id: string;
-  name: string;
-  description: string;
-  start_date: Date;
-  end_date: Date;
+  user_id: string | null;
+  name: string | null;
+  description: string | null;
+  start_date: Date | null;
+  end_date: Date | null;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date | null;
@@ -23,19 +23,19 @@ export class Trips extends Model<TripsAttributes> {
   })
   id: string;
 
-  @Column({ type: DataType.UUID })
+  @Column({ type: DataType.UUID, allowNull: true })
   user_id: string;
 
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.STRING, allowNull: true })
   name: string;
 
-  @Column({ type: DataType.TEXT })
+  @Column({ type: DataType.TEXT, allowNull: true })
   description: string;
 
-  @Column({ type: DataType.DATE })
+  @Column({ type: DataType.DATE, allowNull: true })
   start_date: Date;
 
-  @Column({ type: DataType.DATE })
+  @Column({ type: DataType.DATE, allowNull: true })
   end_date: Date;
 
   @Column({ type: DataType.DATE, allowNull: false, defaultValue: DataType.NOW })
