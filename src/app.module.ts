@@ -17,6 +17,8 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerInterceptor } from './common/interceptors/logger.interceptor';
 import { ApplyRequestIdMiddleware } from './common/middlewares/apply-request-id.middleware';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { TripsModule } from './services/trips/trips.module';
+import { FormatResponseInterceptor } from './common/interceptors/format-response.interceptor';
 @Module({
   imports: [
     ConfigurationsModule,
@@ -25,6 +27,7 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
     HealthModule,
     ExternalModule,
     UsersModule,
+    TripsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -32,6 +35,10 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggerInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: FormatResponseInterceptor,
     },
     {
       provide: APP_FILTER,

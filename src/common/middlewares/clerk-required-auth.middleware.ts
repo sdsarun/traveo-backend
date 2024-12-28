@@ -28,12 +28,12 @@ export class ClerkRequiredAuthMiddleware implements NestMiddleware {
       this.logger.log(auth);
 
       if (!auth.isSignedIn) {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException(auth.message);
       }
 
       next();
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error("ClerkRequiredAuthMiddlewareError:", error);
       throw error;
     }
   }

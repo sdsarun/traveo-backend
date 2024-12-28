@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from "@nestjs/common";
-import { randomRequestId } from "src/shared/utils/generators/request-id";
+import { randomRequestId } from "src/shared/utils/generators/request-id.generator";
 
 @Injectable()
 export class ApplyRequestIdMiddleware implements NestMiddleware {
