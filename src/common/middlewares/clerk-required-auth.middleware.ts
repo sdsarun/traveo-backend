@@ -31,6 +31,8 @@ export class ClerkRequiredAuthMiddleware implements NestMiddleware {
         throw new UnauthorizedException(auth.message);
       }
 
+      console.log("[LOG]: ~ ClerkRequiredAuthMiddleware ~ use ~ auth:", auth)
+
       next();
     } catch (error) {
       this.logger.error("ClerkRequiredAuthMiddlewareError:", error);

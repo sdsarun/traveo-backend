@@ -27,7 +27,7 @@ export class FormatResponseInterceptor implements NestInterceptor {
           success: true,
           statusCode: response.statusCode,
           message,
-          result: controllerResult,
+          data: controllerResult,
         };
 
         this.logger.log(

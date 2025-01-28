@@ -4,21 +4,21 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigurationsModule } from './configurations/configurations.module';
-import { HealthModule } from './services/health/health.module';
-import { ClerkRequiredAuthMiddleware } from './common/middlewares/clerk-required-auth.middleware';
-import { LoggerModule } from './logger/logger.module';
-import { DatabaseModule } from './database/database.module';
-import { ExternalModule } from './services/external/external.module';
-import { UsersModule } from './services/users/users.module';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { FormatResponseInterceptor } from './common/interceptors/format-response.interceptor';
 import { LoggerInterceptor } from './common/interceptors/logger.interceptor';
 import { ApplyRequestIdMiddleware } from './common/middlewares/apply-request-id.middleware';
-import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { ConfigurationsModule } from './configurations/configurations.module';
+import { DatabaseModule } from './database/database.module';
+import { LoggerModule } from './logger/logger.module';
+import { ExternalModule } from './services/external/external.module';
+import { HealthModule } from './services/health/health.module';
 import { TripsModule } from './services/trips/trips.module';
-import { FormatResponseInterceptor } from './common/interceptors/format-response.interceptor';
+import { UsersModule } from './services/users/users.module';
+import { ClerkRequiredAuthMiddleware } from './common/middlewares/clerk-required-auth.middleware';
 @Module({
   imports: [
     ConfigurationsModule,

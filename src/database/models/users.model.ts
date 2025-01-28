@@ -1,4 +1,12 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  Model,
+  Sequelize,
+  Table,
+} from 'sequelize-typescript';
+import { UserCredentialTypes } from './user_credential_types.model';
 
 export type UsersAttributes = {
   id: string;
@@ -19,6 +27,9 @@ export class Users extends Model<UsersAttributes> {
     type: DataType.STRING,
     primaryKey: true,
     allowNull: false,
+    defaultValue: Sequelize.literal(
+      `concat('user_',  REPLACE(gen_random_uuid()::varchar, '-', ''))`,
+    ),
   })
   id: string;
 
@@ -42,4 +53,9 @@ export class Users extends Model<UsersAttributes> {
 
   @Column({ type: DataType.DATE, allowNull: true })
   deleted_at: Date;
+
+  @BelongsTo(() => UserCredentialTypes, {
+    foreignKey: 'user_credential_type_id',
+  })
+  user_credential_type: UserCredentialTypes;
 }

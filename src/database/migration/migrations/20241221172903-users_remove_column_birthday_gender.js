@@ -29,7 +29,7 @@ module.exports = {
             schema,
           },
           'birthday',
-          { type: DataType.DATE, allowNull: true },
+          { type: Sequelize.DataTypes.DATE, allowNull: true },
         ),
         queryInterface.addColumn(
           {
@@ -37,7 +37,7 @@ module.exports = {
             schema,
           },
           'gender',
-          { type: DataType.STRING, allowNull: true },
+          { type: Sequelize.DataTypes.STRING, allowNull: true },
         ),
       ]);
     });

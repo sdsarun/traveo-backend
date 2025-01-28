@@ -13,9 +13,12 @@ module.exports = {
       },
       {
         id: {
-          type: Sequelize.DataTypes.UUID,
+          type: Sequelize.DataTypes.STRING(255),
           primaryKey: true,
-          defaultValue: Sequelize.DataTypes.UUIDV4, // Corrected to use Sequelize
+          allowNull: false,
+          defaultValue: Sequelize.literal(
+            `concat('trip_',  REPLACE(gen_random_uuid()::varchar, '-', ''))`,
+          ),
         },
         user_id: {
           type: Sequelize.DataTypes.STRING(255),

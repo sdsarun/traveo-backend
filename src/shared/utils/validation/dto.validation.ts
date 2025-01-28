@@ -8,7 +8,7 @@ export async function validateDTO<T extends object>(
   const errors = await validate(dto, { whitelist: true });
 
   if (errors.length) {
-    if (options?.validateThrowErrorOnFailed) {
+    if (options?.throwErrorOnValidateFailed) {
       if (typeof options?.onError === 'function') {
         options?.onError(errors);
       } else {

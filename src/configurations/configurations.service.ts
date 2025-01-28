@@ -47,6 +47,7 @@ export class ConfigurationsService {
       password: this.config.get('DB_MAIN_PASSWORD'),
       database: this.config.get('DB_MAIN_DATABASE'),
       schema: this.config.get('DB_MAIN_SCHEMA'),
+      timezone: "+00:00",
       models: MAIN_MODELS,
       autoLoadModels: true,
       synchronize: false,
@@ -60,11 +61,11 @@ export class ConfigurationsService {
       },
       dialectOptions: {
         ssl: this.config.get('DB_MAIN_SSL') === 'true',
+        useUTC: false,
+        timezone: "+07:00"
       },
-      // sync: {
-      //   force: true,
-      //   alter: true,
-      // },
+      logging: this.isDevelopment,
+      logQueryParameters: this.isDevelopment,
     };
   }
 

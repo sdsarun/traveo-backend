@@ -1,4 +1,12 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  Model,
+  Sequelize,
+  Table,
+} from 'sequelize-typescript';
+import { Users } from './users.model';
 
 export type TripsAttributes = {
   id: string;
@@ -17,13 +25,18 @@ export type TripsAttributes = {
 })
 export class Trips extends Model<TripsAttributes> {
   @Column({
-    type: DataType.UUID,
+    type: DataType.STRING(255),
     primaryKey: true,
-    defaultValue: DataType.UUIDV4,
+    defaultValue: Sequelize.literal(
+      `concat('trip_',  REPLACE(gen_random_uuid()::varchar, '-', ''))`,
+    ),
   })
   id: string;
 
-  @Column({ type: DataType.UUID, allowNull: true })
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
   user_id: string;
 
   @Column({ type: DataType.STRING, allowNull: true })
@@ -46,4 +59,9 @@ export class Trips extends Model<TripsAttributes> {
 
   @Column({ type: DataType.DATE, allowNull: true })
   deleted_at: Date;
+
+  @BelongsTo(() => Users, {
+    foreignKey: 'user_id',
+  })
+  user: Users;
 }

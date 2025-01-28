@@ -1,6 +1,7 @@
 import { DeletedObjectJSON, UserJSON } from '@clerk/express';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Transaction } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { Users } from 'src/database/models/users.model';
 import dayjs from 'src/lib/dayjs';
@@ -17,15 +18,28 @@ export class UsersService {
     this.logger.setContext(UsersService.name);
   }
 
-  async findUsers() {
+  get usersModel(): typeof Users {
+    return this.users;
+  }
+
+  async findUsers(): Promise<Users[]> {
     const listUsers = await this.users.findAll({
       where: {},
+      raw: true,
     });
 
     return listUsers;
   }
 
-  async createUserFromWebhook(payload: UserJSON) {
+  async isUserExistByUserId(
+    userId: string,
+    transaction?: Transaction,
+  ): Promise<boolean> {
+    const users = await this.users.findByPk(userId, { transaction, raw: true });
+    return !!users;
+  }
+
+  async createUserFromWebhook(payload: UserJSON): Promise<void> {
     await this.users.create(
       {
         id: payload.id,
@@ -37,7 +51,7 @@ export class UsersService {
     );
   }
 
-  async deleteUserFromWebhook(payload: DeletedObjectJSON) {
+  async deleteUserFromWebhook(payload: DeletedObjectJSON): Promise<void> {
     if (!payload.deleted || !payload.id) {
       return;
     }
@@ -47,7 +61,7 @@ export class UsersService {
     });
   }
 
-  async updateUserFromWebhook(payload: UserJSON) {
+  async updateUserFromWebhook(payload: UserJSON): Promise<void> {
     await this.sqz.transaction(async (t) => {
       await this.users.upsert(
         {

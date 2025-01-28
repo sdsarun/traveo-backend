@@ -16,6 +16,9 @@ module.exports = {
           type: Sequelize.DataTypes.STRING,
           primaryKey: true,
           allowNull: false,
+          defaultValue: Sequelize.literal(
+            `concat('user_',  REPLACE(gen_random_uuid()::varchar, '-', ''))`,
+          ),
         },
         birthday: {
           type: Sequelize.DataTypes.DATE,
@@ -50,7 +53,7 @@ module.exports = {
         deleted_at: {
           type: Sequelize.DataTypes.DATE,
           allowNull: true,
-        }
+        },
       },
     );
   },
